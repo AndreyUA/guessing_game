@@ -1,8 +1,11 @@
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
+use std::time::Instant;
 
 fn main() {
+    let start_time = Instant::now();
+
     println!("Guess the number!!!");
 
     let secret_number = rand::thread_rng().gen_range(1..101);
@@ -40,10 +43,19 @@ fn main() {
                 println!("Too big!");
             }
             Ordering::Equal => {
+                let duration = start_time.elapsed();
+
                 if step_counter == 1 {
-                    println!("You win the game in 1 step! Awesome!");
+                    println!(
+                        "You win the game in 1 step in {:?} seconds! Awesome!",
+                        duration.as_secs()
+                    );
                 } else {
-                    println!("You win the game in {} steps! Cool!", step_counter);
+                    println!(
+                        "You win the game in {} steps in {:?} seconds! Cool!",
+                        step_counter,
+                        duration.as_secs()
+                    );
                 }
 
                 break;
