@@ -7,6 +7,8 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1..101);
 
+    let mut step_counter: i32 = 1;
+
     // println!("The secret number is {}", secret_number);
 
     loop {
@@ -29,10 +31,21 @@ fn main() {
         println!("You guessed: {}", guess);
 
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small!"),
-            Ordering::Greater => println!("Too big!"),
+            Ordering::Less => {
+                step_counter = step_counter + 1;
+                println!("Too small!");
+            }
+            Ordering::Greater => {
+                step_counter = step_counter + 1;
+                println!("Too big!");
+            }
             Ordering::Equal => {
-                println!("You win!");
+                if step_counter == 1 {
+                    println!("You win the game in 1 step! Awesome!");
+                } else {
+                    println!("You win the game in {} steps! Cool!", step_counter);
+                }
+
                 break;
             }
         }
